@@ -15,6 +15,8 @@ import org.springframework.context.annotation.Configuration;
 // AppConfig는 애플리케이션의 실제 동작에 필요한 "구현 객체" 생성
 // AppConfig를 통해서 확실하게 관심사가 분리됨
 // @Configuration: 애플리케이션의 구성정보
+// @Configuration 안 붙여도 스프링 컨테이너에 @Bean 되어있는거 스프링 빈으로 다 등록이 됨
+// But, @Configuration을 안붙이게 되면, AppConfigCGLIB에 의해 싱글톤이 보장되지 않음
 @Configuration
 public class AppConfig {
     // @Bean: 스프링 컨테이너에 등록됨
