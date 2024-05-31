@@ -18,16 +18,21 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppConfig {
     // @Bean: 스프링 컨테이너에 등록됨
+    // @Bean memberService -> new MemberRepository()
+    // @Bean orderService -> new MemberRepository()
+    // 이렇게 두 개 호출하면 싱글톤 깨지는 거 아닌지??
     @Bean
     public MemberService memberService() {
         // appConfig 객체는 memoryMemberRepository 객체를 생성하고 그 참조값을 memberServiceImpl을 생성하면서 생성자로 전달함
         // 즉, MemberServiceImpl에는 MemoryMemberRepository 객체의 의존관계가 주입됨
 //        return new MemberServiceImpl(new MemoryMemberRepository());
+        System.out.println("call AppConfig.memberService");
         return new MemberServiceImpl(memberRepository());
     }
 
     @Bean
     public MemberRepository memberRepository() {
+        System.out.println("call AppConfig.memberRepository");
         return new MemoryMemberRepository();
     }
 
@@ -36,6 +41,7 @@ public class AppConfig {
         // appConfig 객체는 memoryMemberRepository 객체와 fixDiscountPolicy 객체를 생성하고 그 참조값을 orderServiceImpl을 생성하면서 생성자로 전달함
         // 즉, OrderServiceImpl에는 MemoryMemberRepository 객체와 FixDiscountPolicy 객체의 의존관계가 주입됨
 //        return new OrderServiceImpl(new MemoryMemberRepository(), new FixDiscountPolicy());
+        System.out.println("call AppConfig.orderService");
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 
