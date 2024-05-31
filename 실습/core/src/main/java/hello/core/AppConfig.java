@@ -9,6 +9,7 @@ import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
 import hello.core.order.OrderService;
 import hello.core.order.OrderServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,6 +24,7 @@ public class AppConfig {
     // @Bean memberService -> new MemberRepository()
     // @Bean orderService -> new MemberRepository()
     // 이렇게 두 개 호출하면 싱글톤 깨지는 거 아닌지??
+//    @Autowired MemberRepository memberRepository;
     @Bean
     public MemberService memberService() {
         // appConfig 객체는 memoryMemberRepository 객체를 생성하고 그 참조값을 memberServiceImpl을 생성하면서 생성자로 전달함
