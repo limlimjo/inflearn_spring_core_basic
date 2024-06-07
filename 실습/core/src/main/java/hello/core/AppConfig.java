@@ -46,7 +46,8 @@ public class AppConfig {
         // 즉, OrderServiceImpl에는 MemoryMemberRepository 객체와 FixDiscountPolicy 객체의 의존관계가 주입됨
 //        return new OrderServiceImpl(new MemoryMemberRepository(), new FixDiscountPolicy());
         System.out.println("call AppConfig.orderService");
-        return new OrderServiceImpl(memberRepository(), discountPolicy());
+//        return new OrderServiceImpl(memberRepository(), discountPolicy());
+        return null;
     }
 
     @Bean
