@@ -1,5 +1,6 @@
 package hello.core.order;
 
+import hello.core.annotation.MainDiscountPolicy;
 import hello.core.discount.DiscountPolicy;
 import hello.core.discount.FixDiscountPolicy;
 import hello.core.discount.RateDiscountPolicy;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
@@ -39,13 +40,14 @@ public class OrderServiceImpl implements OrderService {
     // 중요! 생성자가 딱 1개만 있으면 @Autowired를 생략해도 자동 주입됨. (물론 스프링 빈에만 해당)
     // 생성자는 Spring Lifecycle 빈 등록할 때 자동 주입이 일어남
     // @Autowired의 기본 동작은 주입할 대상이 없으면 오류가 발생. 주입할 대상이 없어도 동작하게 하려면 @Autowired(required = false)로 지정하면 됨
-//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-//        // 생성자 주입 확인
-//        System.out.println("memberRepository = " + memberRepository);
-//        System.out.println("discountPolicy = " + discountPolicy);
-//        this.memberRepository = memberRepository;
-//        this.discountPolicy = discountPolicy;
-//    }
+    @Autowired
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
+        // 생성자 주입 확인
+        System.out.println("memberRepository = " + memberRepository);
+        System.out.println("discountPolicy = " + discountPolicy);
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 // 할인 정책 변경 문제점 -> 할인 정책을 변경하려면 클라이언트인 OrderServiceImpl의 아래 코드를 고쳐야 함
     // 위에서 언급한 문제점은 DIP, OCP 모두 위반
     // DIP: 인터페이스에만 의존하고, 구현체에는 의존x
