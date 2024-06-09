@@ -11,14 +11,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OrderServiceImpl implements OrderService {
+    private MemberRepository memberRepository;
+    private DiscountPolicy discountPolicy;
 
     // 아래 코드를 보면 OrderServiceImpl은 DIP 원칙을 잘 지키고 있음
     // final은 무조건 값이 할당되어야 함
     // 필드 주입은 사용하지 않는 것이 좋음
-    @Autowired
-    private MemberRepository memberRepository;
-    @Autowired
-    private DiscountPolicy discountPolicy;
+//    @Autowired
+//    private MemberRepository memberRepository;
+//    @Autowired
+//    private DiscountPolicy discountPolicy;
 
     // 수정자 주입은 의존관계 두 번째 단계에서 일어난다고 보면 됨
 //    @Autowired
@@ -35,14 +37,14 @@ public class OrderServiceImpl implements OrderService {
     // 중요! 생성자가 딱 1개만 있으면 @Autowired를 생략해도 자동 주입됨. (물론 스프링 빈에만 해당)
     // 생성자는 Spring Lifecycle 빈 등록할 때 자동 주입이 일어남
     // @Autowired의 기본 동작은 주입할 대상이 없으면 오류가 발생. 주입할 대상이 없어도 동작하게 하려면 @Autowired(required = false)로 지정하면 됨
-//    @Autowired
-//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-//        // 생성자 주입 확인
-//        System.out.println("memberRepository = " + memberRepository);
-//        System.out.println("discountPolicy = " + discountPolicy);
-//        this.memberRepository = memberRepository;
-//        this.discountPolicy = discountPolicy;
-//    }
+    @Autowired
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        // 생성자 주입 확인
+        System.out.println("memberRepository = " + memberRepository);
+        System.out.println("discountPolicy = " + discountPolicy);
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 // 할인 정책 변경 문제점 -> 할인 정책을 변경하려면 클라이언트인 OrderServiceImpl의 아래 코드를 고쳐야 함
     // 위에서 언급한 문제점은 DIP, OCP 모두 위반
     // DIP: 인터페이스에만 의존하고, 구현체에는 의존x
